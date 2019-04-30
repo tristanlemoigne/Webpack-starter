@@ -1,3 +1,27 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('/assets/fonts/Nunito-Regular.woff2') format('woff2');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('/assets/fonts/Nunito-Light.woff2') format('woff2');
+    font-weight: lighter;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body{
-    background: red;
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito';
+    background: lightgreen;
+}
+
+h1{
+    text-transform: uppercase;
+    text-align: center;
 }

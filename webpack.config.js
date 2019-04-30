@@ -1,13 +1,12 @@
 const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const Fiber = require('fibers');
+const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
     entry: {
-        app: './src/index.js',
+        app: './src/app.js',
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -32,30 +31,8 @@ module.exports = {
                     }
                 }]
             },
-            // {
-            //     test: /\.scss$/,
-            //     use: [{
-            //         loader: "style-loader"
-            //     }, 
-            //     {
-            //         loader: "css-loader"
-            //     }, 
-            //     {
-            //         loader: "sass-loader",
-            //         options: {
-            //             implementation: require("sass"),
-            //             fiber: Fiber
-            //         }
-            //     }]
-            // },
             {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: [
-                'file-loader'
-                ]
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/,
                 use: [
                 'file-loader'
                 ]
@@ -63,14 +40,18 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            title: 'Webpack starter'
-        }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new CopyPlugin([
+            { from: 'src/index.html' }, 
+            { from: 'assets', to: 'assets'}
+        ])
     ],
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
+
+    },
+    resolve: {
+        extensions: ['.js', '.json', '.css', '.scss']
     }
 }

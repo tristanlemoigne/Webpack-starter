@@ -15,3 +15,13 @@ function component() {
   }
   
   document.body.appendChild(component());
+
+
+console.log(module.hot)
+if (module.hot) {
+    console.log("true")
+    module.hot.accept('./print.js', function() {
+        console.log('Accepting the updated printMe module!');
+        printMe();
+    })
+}

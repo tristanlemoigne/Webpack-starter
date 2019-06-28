@@ -1,17 +1,17 @@
 const path = require('path');
 const Fiber = require('fibers');
-const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode: 'development',
     entry: {
-        app: './src/app.js',
+        app: './src/index.js',
     },
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist',
-        hot: true
+        watchContentBase: true,
     },
     module: {
         rules: [
@@ -40,16 +40,20 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin({ 
+            filename: 'index.html',
+            template: 'src/index.html',
+            minify: {
+                collapseWhitespace: true
+            }
+        }),
         new CopyPlugin([
-            { from: 'src/index.html' }, 
             { from: 'assets', to: 'assets'}
-        ])
+        ]),
     ],
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
-
     },
     resolve: {
         extensions: ['.js', '.json', '.css', '.scss']
